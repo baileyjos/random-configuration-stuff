@@ -15,6 +15,9 @@
 ;replace highlighted region with what you type rather than inserting it
 (delete-selection-mode t)
 
+;set the default directory to where code lives
+(setq default-directory "~/code")
+
 (require 'powerline)
 (powerline-default-theme)
 
