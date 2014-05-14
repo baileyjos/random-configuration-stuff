@@ -12,6 +12,29 @@
 
 (setq inhibit-startup-message t)
 
+(defun ensure-package-installed (&rest packages)
+  "Assure every package is installed, ask for installation if it’s not.
+
+  Return a list of installed packages or nil for every skipped package."
+  (mapcar
+   (lambda (package)
+     (if (package-installed-p package)
+         nil
+       (if (y-or-n-p (format "Package %s is missing. Install it? " package))
+           (package-install package)
+         package)))
+   packages))
+
+;; make sure to have downloaded archive description.
+;; Or use package-archive-contents as suggested by Nicolas Dudebout
+(or (file-exists-p package-user-dir)
+    (package-refresh-contents))
+
+(ensure-package-installed 'powerline 'magit 'ample-zen-theme 'anaconda-mode 'haskell-mode 'auto-complete 'yasnippet) ;  --> (nil nil) if iedit and magit are already installed
+
+;; activate installed packages
+(package-initialize)
+
 ;replace highlighted region with what you type rather than inserting it
 (delete-selection-mode t)
 
@@ -24,7 +47,7 @@
 (require 'ido)	
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
-(ido-mode 1) 
+(ido-mode t) 
 
 (setq next-line-add-newlines t)
 
