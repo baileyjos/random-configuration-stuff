@@ -30,7 +30,16 @@
 (or (file-exists-p package-user-dir)
     (package-refresh-contents))
 
-(ensure-package-installed 'powerline 'magit 'ample-zen-theme 'anaconda-mode 'haskell-mode 'auto-complete 'yasnippet) ;  --> (nil nil) if iedit and magit are already installed
+(ensure-package-installed 
+ 'powerline 
+ 'magit 
+ 'ample-zen-theme 
+ 'anaconda-mode 
+ 'haskell-mode 
+ 'auto-complete 
+ 'yasnippet
+ 'php-mode
+ 'web-mode)
 
 ;; activate installed packages
 (package-initialize)
@@ -40,6 +49,17 @@
 
 ;set the default directory to where code lives
 (setq default-directory "~/code")
+
+;start emacs maximized
+(custom-set-variables
+'(initial-frame-alist (quote ((fullscreen . maximized)))))
+
+;keep a list of recent files and open them with the F7 key
+(recentf-mode t)
+(global-set-key (kbd "<f7>") 'recentf-open-files)
+
+;newline and indent
+(define-key global-map (kbd "RET") 'newline-and-indent)
 
 (require 'powerline)
 (powerline-default-theme)
@@ -52,8 +72,6 @@
 (setq next-line-add-newlines t)
 
 (global-linum-mode 1)
-
-(add-to-list 'default-frame-alist '(font . "tamsyn" ))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -80,4 +98,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:inherit nil :stipple nil :background "#212121" :foreground "#bdbdb3" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "adobe" :family "Source Code Pro")))))
